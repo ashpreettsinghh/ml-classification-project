@@ -188,6 +188,9 @@ def main():
 
     st.success(f"Loaded test data: {df.shape[0]} samples, {df.shape[1]} columns")
 
+    with st.expander("Preview uploaded data"):
+        st.dataframe(df.head(10), use_container_width=True)
+
     X_test_raw = df[feature_names].values
     y_test = df["target"].values
 
