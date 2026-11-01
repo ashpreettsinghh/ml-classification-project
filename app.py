@@ -30,6 +30,7 @@ from sklearn.metrics import (
 # ---------------------------------------------------------------------------
 st.set_page_config(
     page_title="ML Classification Dashboard",
+    page_icon="chart_with_upwards_trend",
     layout="wide",
 )
 
@@ -264,6 +265,30 @@ def main():
         )
         report_df = pd.DataFrame(report).T
         st.dataframe(report_df.style.format("{:.4f}"), use_container_width=True)
+
+    # ------------------------------------------------------------------
+    # Section: Prediction results
+    # ------------------------------------------------------------------
+    st.header(f"Prediction Results — {model_choice}")
+
+    results_df = df.copy()
+    results_df["Predicted"] = [label_names[p] for p in y_pred]
+    results_df["Actual"] = [label_names[a] for a in y_test]
+    results_df["Match"] = results_df["Predicted"] == results_df["Actual"]
+
+    st.dataframe(
+        results_df[["Actual", "Predicted", "Match"]].head(50),
+        use_container_width=True,
+    )
+
+    # Download predictions
+    csv_output = results_df[["Actual", "Predicted", "Match"]].to_csv(index=False).encode("utf-8")
+    st.download_button(
+        label="Download Predictions CSV",
+        data=csv_output,
+        file_name=f"predictions_{model_choice.lower().replace(' ', '_')}.csv",
+        mime="text/csv",
+    )
 
     # ------------------------------------------------------------------
     # Footer
