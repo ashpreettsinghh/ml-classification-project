@@ -16,23 +16,28 @@ The goal of this project is to implement and compare five classical machine lear
 ## b. Dataset Description
 
 **Dataset:** Breast Cancer Wisconsin (Diagnostic)  
-**Source:** UCI Machine Learning Repository (available via `sklearn.datasets.load_breast_cancer()`)  
-**Original Creators:** Dr. William H. Wolberg, W. Nick Street, Olvi L. Mangasarian (University of Wisconsin)
+**Source:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic) (also available via `sklearn.datasets.load_breast_cancer()`)  
+**Dataset URL:** https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic  
+**Original Creators:** Dr. William H. Wolberg, W. Nick Street, Olvi L. Mangasarian (University of Wisconsin, 1995)
+
+The Breast Cancer Wisconsin (Diagnostic) dataset is a widely used benchmark dataset in the machine learning community for binary classification tasks. It was created from digitized images of fine needle aspirate (FNA) biopsies of breast masses collected at the University of Wisconsin Hospitals, Madison. The dataset is used to predict whether a breast tumor is malignant (cancerous) or benign (non-cancerous) based on characteristics of cell nuclei visible in the FNA images. This makes it a clinically relevant dataset where accurate classification can support early detection and treatment planning.
 
 | Property | Value |
 |---|---|
 | **Number of Instances** | 569 |
 | **Number of Features** | 30 |
 | **Target Classes** | 2 — Malignant (0), Benign (1) |
-| **Class Distribution** | 212 Malignant, 357 Benign |
+| **Class Distribution** | 212 Malignant (37.3%), 357 Benign (62.7%) |
 | **Missing Values** | None |
 | **Feature Types** | All continuous (float64) |
 
-**Features** are computed from a digitized image of a FNA of a breast mass and describe characteristics of the cell nuclei present in the image. For each of 10 real-valued properties (radius, texture, perimeter, area, smoothness, compactness, concavity, concave points, symmetry, fractal dimension), the **mean**, **standard error**, and **worst** (largest) values are reported, resulting in 30 features total.
+For each cell nucleus image, 10 real-valued properties are measured: radius (mean distance from center to perimeter points), texture (standard deviation of gray-scale values), perimeter, area, smoothness (local variation in radius lengths), compactness (perimeter squared / area - 1.0), concavity (severity of concave portions of the contour), concave points (number of concave portions of the contour), symmetry, and fractal dimension (coastline approximation - 1). For each of these 10 properties, the **mean**, **standard error**, and **worst** (mean of the three largest values) are computed, giving 30 features in total. The features are computed using the Xcyt program, which performs precise boundary detection of cell nuclei using an interactive graphical interface.
 
-**Train-Test Split:** 80% training (455 samples), 20% testing (114 samples), stratified by target class, `random_state=42`.
+The dataset has a moderate class imbalance (62.7% benign vs 37.3% malignant), which is typical of real-world medical datasets where benign cases tend to outnumber malignant ones. All features are continuous numeric values with no missing data, making it well-suited for standard classification algorithms without extensive preprocessing.
 
-**Preprocessing:** StandardScaler fitted on training data only, then applied to both training and test sets.
+**Train-Test Split:** 80% training (455 samples), 20% testing (114 samples), stratified by target class, `random_state=42`. Stratification ensures both training and test sets maintain the same class proportions as the original dataset.
+
+**Preprocessing:** StandardScaler fitted on training data only, then applied to both training and test sets. This prevents data leakage from the test set into the training process.
 
 ---
 
